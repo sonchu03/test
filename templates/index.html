@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dự đoán phim</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% if result %}
+        <h1>Gợi ý bộ phim</h1>
+        <h2>Kết quả:</h2>
+        <p>Tên phim: {{ result.selected_movie }}</p>
+        <p>Điểm đánh giá dự đoán: {{ result.predicted_score }}</p>
+        <p>Điểm đánh giá thật: {{ result.actual_score }}</p>
+        
+        <h2>Những bộ phim giống bộ phim đã chọn:</h2>
+        <ul>
+            {% for movie in result.similar_movies %}
+                <li>Tên phim: {{ movie.title }}, Thể loại: {{ movie.genres }}, Đánh giá: {{ movie.rating }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Dự đoán bộ phim</h1>
+        <form action="/" method="POST">
+        <input type="text" name="movie_name" placeholder="Enter movie name" value="{{ request.form.movie_name }}">
+        <input type="submit" value="Nhập">
+    </form>
+    {% endif %}
+</body>
+</html>
